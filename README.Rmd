@@ -7,7 +7,7 @@ output: rmarkdown::github_document
 
 Here we provide a meta annotations for [Telescope](https://github.com/mlbendall/telescope) transposable elements. The main *annotation* from this repository is:
 
-[Meta_annotations_TE](https://github.com/LIniguez/Telescope_MetaAnnotations/blob/main/TE_annotation.v2.0.tsv)
+[Meta_annotations_TE](https://github.com/LIniguez/Telescope_MetaAnnotations/raw/main/TE_annotation.v2.0.tsv)
 
 The annotation is based on ENSEMBL HG38 release 99. 
 
