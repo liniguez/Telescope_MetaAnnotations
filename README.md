@@ -14,6 +14,9 @@ The annotation is based on ENSEMBL HG38 release 99.
 ``` r
 library(ensembldb)
 library(tidyr)
+library(BSgenome)
+library(BSgenome.Hsapiens.UCSC.hg38)
+library(Biostrings)
 ```
 
 ``` r
@@ -77,6 +80,12 @@ rownames(hg38_retro)<-hg38_retro$Locus
 
 herv_gr<-GRanges(seqnames = hg38_retro$Chrom, ranges = IRanges(start=hg38_retro$Start, end=hg38_retro$End), strand=hg38_retro$Strand)
 names(herv_gr)<- hg38_retro$Locus
+
+
+teseqs<- getSeq(BSgenome.Hsapiens.UCSC.hg38, herv_gr)
+names(teseqs)<-paste0(names(herv_gr),"::",as.character(seqnames(herv_gr)),
+                      ":",start(herv_gr),"-",end(herv_gr),"(",strand(herv_gr),")")
+writeXStringSet(teseqs, "Retro.fa")
 ```
 
 The coding potential for each of the TE was calculated with
