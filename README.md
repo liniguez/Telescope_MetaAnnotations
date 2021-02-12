@@ -282,4 +282,5 @@ db_remap2020_mod<-lapply(names(temp),function(x){
                                       })
 db_remap2020_mod<- do.call("rbind", db_remap2020_mod)
 write.table(db_remap2020_mod,"Telescope_overlap_ReMap2020.csv",quote = F,row.names = F,sep=",")
+system("bzip2 Telescope_overlap_ReMap2020.csv")
 ```
