@@ -234,5 +234,39 @@ hg38_retro[temp_cage[,1],"FANTOM_CAGE"]<-temp_cage[,2]
 write.table(hg38_retro, "TE_annotation.v2.0.tsv", row.names = F,sep="\t",quote=F)
 ```
 
+Additionally to the main annotation file here is another file for analyzing enrichment of chip-seq data from [ReMap 2020](http://remap.univ-amu.fr/):
+
+[Telescope and ReMap2020](https://github.com/LIniguez/Telescope_MetaAnnotations/raw/main/Telescope_overlap_ReMap2020.csv)
+
+This file was created with the following scripts:
+
+```{bash REMAPdownload,eval=FALSE, echo=T}
+
+wget -O ReMap2020.bed.gz http://remap.univ-amu.fr/storage/remap2020/hg38/MACS2/remap2020_crm_macs2_hg38_v1_0.bed.gz
+gunzip ReMap2020.bed.gz
+
+```
+
+```{r overlapRemap,echo=TRUE,message=FALSE,warning=FALSE}
+temp<-read.delim("ReMap2020.bed", header = F)
+remap<-GRanges(seqnames = temp[,1],
+                   ranges = IRanges(start=temp[,2], end=temp[,3]), strand='*',
+                ReMap2020=temp[,4])
+
+pairs_remap_h <- findOverlapPairs(remap, herv_gr, ignore.strand = TRUE)
+
+data<-data.frame(ReMap2020=pairs_remap_h@first$ReMap2020,TE =names(pairs_remap_h@second))
+
+db_remap2020<-aggregate(data$ReMap2020, by=list(TE=data$TE), paste0,collapse = ",")
+temp<-strsplit(db_remap2020$x,split = ",")
+names(temp)<-db_remap2020$TE
+db_remap2020_mod<-lapply(names(temp),function(x){
+                                      n<-length(temp[[x]])
+                                      return(data.frame(remap2020=temp[[x]],
+                                                        TE=rep(x,n)))
+                                      })
+db_remap2020_mod<- do.call("rbind", db_remap2020_mod)
+write.table(db_remap2020_mod,"Telescope_overlap_ReMap2020.csv",quote = F,row.names = F,sep=",")
+```
 
 
