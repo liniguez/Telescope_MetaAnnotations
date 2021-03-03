@@ -252,7 +252,7 @@ analyzing enrichment of chip-seq data from
 [ReMap 2020](http://remap.univ-amu.fr/):
 
 [Telescope and
-ReMap2020](https://github.com/LIniguez/Telescope_MetaAnnotations/raw/main/Telescope_overlap_ReMap2020.csv)
+ReMap2020](https://github.com/LIniguez/Telescope_MetaAnnotations/raw/main/Telescope_overlap_ReMap2020.csv.bz2)
 
 This file was created with the following scripts:
 
